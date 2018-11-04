@@ -21,4 +21,4 @@ A5FEF2C499BB:test-ssid2:OPEN:no:9:43:0d00h00m
 ```
 
 ### Licence
-GPL3
+MIT
