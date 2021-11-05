@@ -55,6 +55,8 @@ $1 == "TSF:" {
     wifi[MAC]["TSF"] = day"d"hour"h"min"m"
 }
 END {
+    printf " {\"%s\":{\"availablenetworks\":\n[ ", interface
+    i=0
     for (w in wifi) {
         if (wifi[w]["wep"]) {
             if (wifi[w]["wpa1"] || wifi[w]["wpa2"])
@@ -62,7 +64,14 @@ END {
             else
                 wifi[w]["enc"] = "WEP"
         }
-        printf "%s:%s:%s:%s:%s:%s:%s\n", w, wifi[w]["SSID"], wifi[w]["enc"], \
+        if ( i > 0 ) {
+	    print ","
+        }
+        printf " {\"MAC\":\"%s\",\"SSID\":\"%s\",\"ENC\":\"%s\",\"WPS\":\"%s\",\"CH\":\"%s\",\"SIG\":\"%s\",\"TSF\":\"%s\"}\n ", w, wifi[w]["SSID"], wifi[w]["enc"], \
                wifi[w]["WPS"], wifi[w]["Ch"], wifi[w]["Sig"], wifi[w]["TSF"]
-    }
+        i=i+1
+   }
+    print "]\n}\n}\n"
 }
+
+
